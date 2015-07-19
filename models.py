@@ -11,7 +11,7 @@ class User(db.Model):
     def __init__(self, uid, token, snsId):
         self.uid = uid
         self.deviceToken = token
-        self.deviceToken = snsId
+        self.snsId = snsId
 
     def __repr__(self):
         return '<User {}>'.format(self.uid)
