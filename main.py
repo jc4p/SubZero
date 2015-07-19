@@ -27,8 +27,9 @@ def incoming():
         raise InvalidRequestError("Both uid and deviceToken are required")
 
     sns = boto.connect_sns(aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
-    endpoint = sns.create_platform_endpoint(platform_application_arn=SNS_APPLICATION,
+    response = sns.create_platform_endpoint(platform_application_arn=SNS_APPLICATION,
         token=deviceToken, custom_user_data=uid)
+    endpoint = response['CreatePlatformEndpointResponse']['CreatePlatformEndpointResult']['EndpointArn']
     subscription = sns.subscribe(topic=SNS_TOPIC, protocol="application", endpoint=endpoint)
 
     user = models.User(uid, deviceToken, endpoint)
