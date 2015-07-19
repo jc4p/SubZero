@@ -21,24 +21,34 @@ def hello():
 
 @app.route("/register", methods=["POST"])
 def incoming():
-    uid = request.form.get("uid", None)
-    deviceToken = request.form.get("deviceToken", None)
+    uid = request.form.get("uid", "")
+    deviceToken = request.form.get("deviceToken", "")
     if not (uid and deviceToken):
         raise InvalidRequestError("Both uid and deviceToken are required")
 
-    # TODO:
-    # If we already have this uid registered, get the row
-    #   - If their deviceToken is the same as the incoming one, do nothing
-    #       - If it's not, POST to SNS, update both deviceToken and snsId, and delete the old one from SNS
+    user = User.get_by_uid(uid)
+
+    if user and user.deviceToken == deviceToken:
+        return ""
 
     sns = boto.connect_sns(aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
+
+    if user:
+        sns.delete_endpoint(user.snsId)
+
     response = sns.create_platform_endpoint(platform_application_arn=SNS_APPLICATION,
         token=deviceToken, custom_user_data=uid)
-    endpoint = response['CreatePlatformEndpointResponse']['CreatePlatformEndpointResult']['EndpointArn']
-    subscription = sns.subscribe(topic=SNS_TOPIC, protocol="application", endpoint=endpoint)
 
-    user = models.User(uid, deviceToken, endpoint)
-    db.session.add(user)
+    endpoint = response['CreatePlatformEndpointResponse']['CreatePlatformEndpointResult']['EndpointArn']
+    sns.subscribe(topic=SNS_TOPIC, protocol="application", endpoint=endpoint)
+
+    if not User:
+        user = models.User(uid, deviceToken, endpoint)
+        db.session.add(user)
+    else:
+        user.deviceToken = deviceToken
+        user.snsId = endpoint
+
     db.session.commit()
     
     return ""
