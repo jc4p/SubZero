@@ -30,7 +30,11 @@ def incoming():
     endpoint = sns.create_platform_endpoint(platform_application_arn=SNS_APPLICATION,
         token=deviceToken, custom_user_data=uid)
     subscription = sns.subscribe(topic=SNS_TOPIC, protocol="application", endpoint=endpoint)
-    print subscription
+
+    user = models.User(uid, deviceToken, endpoint)
+    db.session.add(user)
+    db.session.commit()
+    
     return ""
 
 
