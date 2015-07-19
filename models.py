@@ -15,3 +15,7 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.uid)
+
+    @staticmethod
+    def get_by_uid(uid):
+        return User.query.filter_by(uid=uid).first()
