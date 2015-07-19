@@ -5,7 +5,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.String())
-    deviceToken = db.Column('deviceToken', db.Binary(32))
+    deviceToken = db.Column('deviceToken', db.Unicode(length=32))
     snsId = db.column(db.String())
 
     def __init__(self, uid, token, snsId):
