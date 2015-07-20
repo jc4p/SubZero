@@ -30,7 +30,7 @@ def register():
     if not (uid and deviceToken):
         raise InvalidRequestError("Both uid and deviceToken are required")
 
-    user = User.get_by_uid(uid)
+    user = models.User.get_by_uid(uid)
 
     if user and user.deviceToken == deviceToken:
         return ""
@@ -78,6 +78,48 @@ def untappd_callback():
     ios_uri = "keepitcool://untappd/#{}".format(res['response']['access_token'])
 
     return redirect(ios_uri)
+
+
+@app.route("/tokens/untappd")
+def tokens_untappd():
+    uid = request.form.get("uid", "")
+    untappdToken = request.form.get("untappdToken", "")
+
+    if not (uid and untappdToken):
+        raise InvalidRequestError("uid and untappdToken are required")
+
+    user = User.get_by_uid(uid)
+
+    if not user:
+        raise InvalidRequestError("Unknown user")
+
+    db.session.delete(models.UntappdToken.filter_by(user_id=uid))
+    db.session.commit()
+
+    token = models.UntappdToken(uid, untappdToken)
+    db.session.add(token)
+    db.session.commit()
+
+
+@app.route("/tokens/swarm")
+def tokens_untappd():
+    uid = request.form.get("uid", "")
+    swarmToken = request.form.get("swarmToken", "")
+
+    if not (uid and swarmToken):
+        raise InvalidRequestError("uid and swarmToken are required")
+
+    user = User.get_by_uid(uid)
+
+    if not user:
+        raise InvalidRequestError("Unknown user")
+
+    db.session.delete(models.FoursquareToken.filter_by(user_id=uid))
+    db.session.commit()
+
+    token = models.FoursquareToken(uid, untappdToken)
+    db.session.add(token)
+    db.session.commit()
 
 
 class InvalidRequestError(Exception):
