@@ -74,7 +74,7 @@ def untappd_callback():
 
     if 'error_type' in res['meta']:
         return res['meta']['error_detail']
-
+    raise ValueError(res['response'])
     ios_uri = "keepitcool://untappd/#".format(res['response']['access_token'])
 
     return redirect(ios_uri)
