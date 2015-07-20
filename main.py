@@ -1,6 +1,8 @@
 from flask import Flask, request, redirect
 from flask import jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 
 from secrets import *
 from static import *
@@ -15,7 +17,6 @@ app.debug = True
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres://subzero@localhost/subzero')
 
 db = SQLAlchemy(app)
-
 import models
 
 @app.route("/")
