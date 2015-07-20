@@ -62,7 +62,7 @@ def untappd_callback():
     code = request.form.get("code", "")
 
     if not code:
-        return InvalidRequestError("code is required")
+        raise InvalidRequestError("code is required")
 
     authorize_url = "https://untappd.com/oauth/authorize/?"
     authorize_url += "client_id={}&".format(UNTAPPD_CLIENT_ID)
