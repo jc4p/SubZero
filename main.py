@@ -123,6 +123,7 @@ def tokens_untappd():
     token = models.UntappdToken(user.id, untappdToken)
     db.session.add(token)
     db.session.commit()
+    return ""
 
 
 @app.route("/tokens/swarm", methods=["POST"])
@@ -145,6 +146,7 @@ def tokens_swarm():
     token = models.FoursquareToken(user.id, untappdToken)
     db.session.add(token)
     db.session.commit()
+    return ""
 
 
 class InvalidRequestError(Exception):
