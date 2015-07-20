@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 from flask import jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 
