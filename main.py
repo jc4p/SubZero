@@ -68,7 +68,7 @@ def settings():
 
     user = models.User.get_by_uid(uid)
     if not user:
-        return InvalidRequestError("Unknown user")
+        raise InvalidRequestError("Unknown user")
 
     user.untappdEnabled = useUntappd
     user.swarmEnabled = useSwarm
