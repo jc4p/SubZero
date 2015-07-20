@@ -102,7 +102,7 @@ def tokens_untappd():
 
 
 @app.route("/tokens/swarm")
-def tokens_untappd():
+def tokens_swarm():
     uid = request.form.get("uid", "")
     swarmToken = request.form.get("swarmToken", "")
 
