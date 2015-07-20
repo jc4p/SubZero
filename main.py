@@ -57,6 +57,26 @@ def register():
     
     return ""
 
+@app.route("/settings", methods=["POST"])
+def settings():
+    uid = request.form.get("uid", "")
+    useUntappd = request.form.get("useUntappd", False)
+    useSwarm = request.form.get("useSwarm", False)
+
+    if not uid:
+        raise InvalidRequestError("uid is required")
+
+    user = models.User.get_by_uid(uid)
+    if not user:
+        return InvalidRequestError("Unknown user")
+
+    user.untappdEnabled = useUntappd
+    user.swarmEnabled = useSwarm
+
+    db.session.add(user)
+    db.session.commit()
+
+
 @app.route("/untappd_callback")
 def untappd_callback():
     code = request.args.get("code", "")
