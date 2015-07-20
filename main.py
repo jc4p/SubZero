@@ -120,7 +120,7 @@ def tokens_untappd():
         db.session.delete(u)
     db.session.commit()
 
-    token = models.UntappdToken(uid, untappdToken)
+    token = models.UntappdToken(user.id, untappdToken)
     db.session.add(token)
     db.session.commit()
 
@@ -142,7 +142,7 @@ def tokens_swarm():
         db.session.delete(u)
     db.session.commit()
 
-    token = models.FoursquareToken(uid, untappdToken)
+    token = models.FoursquareToken(user.id, untappdToken)
     db.session.add(token)
     db.session.commit()
 
