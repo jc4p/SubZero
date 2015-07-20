@@ -57,7 +57,8 @@ def register():
     
     return ""
 
-@app.route("/untappd_callback"):
+@app.route("/untappd_callback")
+def untappd_callback():
     code = request.form.get("code", "")
 
     if not code:
@@ -74,7 +75,6 @@ def register():
     ios_uri = "keepitcool://untappd?token={}".format(res['response']['access_token'])
 
     return redirect(ios_uri)
-
 
 
 class InvalidRequestError(Exception):
