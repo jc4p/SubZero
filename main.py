@@ -80,7 +80,7 @@ def untappd_callback():
     return redirect(ios_uri)
 
 
-@app.route("/tokens/untappd")
+@app.route("/tokens/untappd", methods=["POST"])
 def tokens_untappd():
     uid = request.form.get("uid", "")
     untappdToken = request.form.get("untappdToken", "")
@@ -101,7 +101,7 @@ def tokens_untappd():
     db.session.commit()
 
 
-@app.route("/tokens/swarm")
+@app.route("/tokens/swarm", methods=["POST"])
 def tokens_swarm():
     uid = request.form.get("uid", "")
     swarmToken = request.form.get("swarmToken", "")
