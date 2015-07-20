@@ -76,6 +76,8 @@ def settings():
     db.session.add(user)
     db.session.commit()
 
+    return ""
+
 
 @app.route("/untappd_callback")
 def untappd_callback():
