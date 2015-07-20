@@ -3,8 +3,12 @@ from flask import jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from secrets import *
+from static import *
+
 import os
 import boto
+import requests
+
 
 app = Flask(__name__)
 app.debug = True
@@ -20,7 +24,7 @@ def hello():
 
 
 @app.route("/register", methods=["POST"])
-def incoming():
+def register():
     uid = request.form.get("uid", "")
     deviceToken = request.form.get("deviceToken", "")
     if not (uid and deviceToken):
@@ -52,6 +56,25 @@ def incoming():
     db.session.commit()
     
     return ""
+
+@app.route("/untappd_callback"):
+    code = request.form.get("code", "")
+
+    if not code:
+        return InvalidRequestError("code is required")
+
+    authorize_url = "https://untappd.com/oauth/authorize/?"
+    authorize_url += "client_id={}&".format(UNTAPPD_CLIENT_ID)
+    authorize_url += "client_secret={}&".format(UNTAPPD_CLIENT_SECRET)
+    authorize_url += "response_type=code&redirect_url={}&".format(UNTAPPD_REDIRECT_URL)
+    authorize_url += "&code={}".format(code)
+
+    res = requests.get(authorize_url).json()
+
+    ios_uri = "keepitcool://untappd?token={}".format(res['response']['access_token'])
+
+    return redirect(ios_uri)
+
 
 
 class InvalidRequestError(Exception):
