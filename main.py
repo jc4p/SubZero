@@ -59,7 +59,7 @@ def register():
 
 @app.route("/untappd_callback")
 def untappd_callback():
-    code = request.form.get("code", "")
+    code = request.args.get("code", "")
 
     if not code:
         raise InvalidRequestError("code is required")
@@ -71,6 +71,9 @@ def untappd_callback():
     authorize_url += "&code={}".format(code)
 
     res = requests.get(authorize_url).json()
+
+    if 'error_type' in res['meta']:
+        return res['meta']['error_detail']
 
     ios_uri = "keepitcool://untappd?token={}".format(res['response']['access_token'])
 
