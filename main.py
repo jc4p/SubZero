@@ -115,7 +115,7 @@ def tokens_untappd():
     if not user:
         raise InvalidRequestError("Unknown user")
 
-    db.session.delete(models.UntappdToken.filter_by(user_id=uid))
+    db.session.delete(models.UntappdToken.query.filter_by(user_id=uid))
     db.session.commit()
 
     token = models.UntappdToken(uid, untappdToken)
@@ -136,7 +136,7 @@ def tokens_swarm():
     if not user:
         raise InvalidRequestError("Unknown user")
 
-    db.session.delete(models.FoursquareToken.filter_by(user_id=uid))
+    db.session.delete(models.FoursquareToken.query.filter_by(user_id=uid))
     db.session.commit()
 
     token = models.FoursquareToken(uid, untappdToken)
