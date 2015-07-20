@@ -88,7 +88,7 @@ def tokens_untappd():
     if not (uid and untappdToken):
         raise InvalidRequestError("uid and untappdToken are required")
 
-    user = User.get_by_uid(uid)
+    user = models.User.get_by_uid(uid)
 
     if not user:
         raise InvalidRequestError("Unknown user")
@@ -109,7 +109,7 @@ def tokens_swarm():
     if not (uid and swarmToken):
         raise InvalidRequestError("uid and swarmToken are required")
 
-    user = User.get_by_uid(uid)
+    user = models.User.get_by_uid(uid)
 
     if not user:
         raise InvalidRequestError("Unknown user")
