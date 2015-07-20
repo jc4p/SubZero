@@ -46,7 +46,7 @@ def register():
     endpoint = response['CreatePlatformEndpointResponse']['CreatePlatformEndpointResult']['EndpointArn']
     sns.subscribe(topic=SNS_TOPIC, protocol="application", endpoint=endpoint)
 
-    if not User:
+    if not user:
         user = models.User(uid, deviceToken, endpoint)
         db.session.add(user)
     else:
