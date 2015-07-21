@@ -61,8 +61,8 @@ def register():
 @app.route("/settings", methods=["POST"])
 def settings():
     uid = request.form.get("uid", "")
-    useUntappd = request.form.get("useUntappd", False)
-    useSwarm = request.form.get("useSwarm", False)
+    useUntappd = request.form.get("useUntappd", False) in [True, 'true', 'True', 1, '1']
+    useSwarm = request.form.get("useSwarm", False) in [True, 'true', 'True', 1, '1']
 
     if not uid:
         raise InvalidRequestError("uid is required")

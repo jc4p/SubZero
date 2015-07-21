@@ -6,9 +6,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.String())
     deviceToken = db.Column(db.Unicode(length=64))
-    snsId = db.column(db.String())
-    untappdEnabled = db.column(db.Boolean())
-    swarmEnabled = db.column(db.Boolean())
+    snsId = db.Column(db.String())
+    untappdEnabled = db.Column(db.Boolean())
+    swarmEnabled = db.Column(db.Boolean())
 
     def __init__(self, uid, token, snsId):
         self.uid = uid

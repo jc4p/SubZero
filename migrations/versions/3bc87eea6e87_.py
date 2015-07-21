@@ -1,13 +1,13 @@
-"""empty message
+"""Initial DB schema
 
-Revision ID: 556de9c727e3
+Revision ID: 3bc87eea6e87
 Revises: None
-Create Date: 2015-07-20 01:51:22.509129
+Create Date: 2015-07-20 20:21:51.540913
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '556de9c727e3'
+revision = '3bc87eea6e87'
 down_revision = None
 
 from alembic import op
@@ -21,8 +21,8 @@ def upgrade():
     sa.Column('uid', sa.String(), nullable=True),
     sa.Column('deviceToken', sa.Unicode(length=64), nullable=True),
     sa.Column('snsId', sa.String(), nullable=True),
-    sa.Column('untappdEnabled', sa.Boolean()),
-    sa.Column('swarmEnabled', sa.Boolean()),
+    sa.Column('untappdEnabled', sa.Boolean(), nullable=True),
+    sa.Column('swarmEnabled', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('foursquareToken',
