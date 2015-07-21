@@ -9,6 +9,7 @@ class User(db.Model):
     snsId = db.Column(db.String())
     untappdEnabled = db.Column(db.Boolean())
     swarmEnabled = db.Column(db.Boolean())
+    quarantined = db.Column(db.Boolean())
 
     def __init__(self, uid, token, snsId):
         self.uid = uid
@@ -16,6 +17,7 @@ class User(db.Model):
         self.snsId = snsId
         self.untappdEnabled = False
         self.swarmEnabled = False
+        self.quarantined = False
 
     def __repr__(self):
         return '<User {}>'.format(self.uid)
