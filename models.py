@@ -6,15 +6,13 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.String())
     deviceToken = db.Column(db.Unicode(length=64))
-    snsId = db.Column(db.String())
     untappdEnabled = db.Column(db.Boolean())
     swarmEnabled = db.Column(db.Boolean())
     quarantined = db.Column(db.Boolean())
 
-    def __init__(self, uid, token, snsId):
+    def __init__(self, uid, token):
         self.uid = uid
         self.deviceToken = token
-        self.snsId = snsId
         self.untappdEnabled = False
         self.swarmEnabled = False
         self.quarantined = False

@@ -33,7 +33,7 @@ def _check_untappd_feed_for_user(user):
 def process_all():
     sns = boto.connect_sns(aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
     users = User.query.filter(User.quarantined == False, User.untappdEnabled).all()
-    message = '{"APNS_SANDBOX": "{\\"aps\\":{\\"content-available\\": 1},\\"quarantine\\": 1}"}'
+    message = '{"APNS_SANDBOX": "{\\"aps\\":{\\"content-available\\": 1, \\"sound\\": \\"\\"},\\"quarantine\\": 1}"}'
 
     for user in users:
         # should_quarantine = _check_untappd_feed_for_user(user)
