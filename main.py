@@ -41,6 +41,9 @@ def register():
         db.session.add(user)
     else:
         user.deviceToken = deviceToken
+        ontherocks('/unsubscribe', {'user': user.uid})
+
+    ontherocks('/subscribe', {'user': user.uid, 'type': 'ios', 'token': user.deviceToken})
 
     db.session.commit()
     
@@ -158,6 +161,10 @@ def handle_invalid_request_error(error):
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response
+
+
+def ontherocks(url, data):
+    return requests.post(ONTHEROCKS + url, headers={'x-auth-key': ONTHEROCKS_TOKEN}, data=data)
 
 
 if __name__ == "__main__":

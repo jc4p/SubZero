@@ -1,7 +1,6 @@
 import os
 
-SNS_TOPIC   = os.environ.get('SNS_TOPIC', '')
-SNS_APPLICATION = os.environ.get('SNS_APPLICATION', '')
+ONTHEROCKS_TOKEN = os.environ.get('ONTHEROCKS_TOKEN', '')
 
 AWS_ACCESS_KEY  = os.environ.get('AWS_ACCESS_KEY', '')
 AWS_SECRET_KEY  = os.environ.get('AWS_SECRET_KEY', '')

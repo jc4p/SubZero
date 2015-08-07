@@ -1,6 +1,5 @@
 from datetime import datetime
 import requests
-import boto
 
 from main import db
 from models import *
@@ -31,15 +30,14 @@ def _check_untappd_feed_for_user(user):
     return False
 
 def process_all():
-    sns = boto.connect_sns(aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
     users = User.query.filter(User.quarantined == False, User.untappdEnabled).all()
-    message = '{"APNS_SANDBOX": "{\\"aps\\":{\\"content-available\\": 1, \\"sound\\": \\"\\"},\\"quarantine\\": 1}"}'
 
     for user in users:
         # should_quarantine = _check_untappd_feed_for_user(user)
         should_quarantine = True
         if should_quarantine:
-            res = sns.publish(message=message, message_structure="json", target_arn=user.snsId)
+            payload = {'users': [user.uid], 'ios': {'aps': {'content-available': 1, 'sound': ''}, 'quarantine': 1}}
+            requests.post(ONTHEROCKS + "send", headers={'x-auth-key': ONTHEROCKS_TOKEN}, data=payload)
             user.quarantined = True
             # db.session.add(user)
             # db.session.commit()
