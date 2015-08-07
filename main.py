@@ -164,7 +164,7 @@ def handle_invalid_request_error(error):
 
 
 def ontherocks(url, data):
-    return requests.post(ONTHEROCKS + url, headers={'x-auth-key': ONTHEROCKS_TOKEN}, data=data)
+    return requests.post(ONTHEROCKS + url, headers={'X-Auth-Key': ONTHEROCKS_TOKEN}, data=data)
 
 
 if __name__ == "__main__":
