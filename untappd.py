@@ -36,8 +36,7 @@ def process_all():
         # should_quarantine = _check_untappd_feed_for_user(user)
         should_quarantine = True
         if should_quarantine:
-            payload = {'users': [user.uid], 'ios': {'aps': {'content-available': 1, 'sound': ''}, 'quarantine': 1}}
-            requests.post(ONTHEROCKS + "send", headers={'x-auth-key': ONTHEROCKS_TOKEN}, data=payload)
+            requests.post(ONTHEROCKS + "quarantine", headers={'X-Auth-Key': ONTHEROCKS_TOKEN}, data={'deviceToken': user.deviceToken})
             user.quarantined = True
             # db.session.add(user)
             # db.session.commit()
