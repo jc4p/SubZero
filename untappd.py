@@ -4,6 +4,7 @@ import requests
 from main import db
 from models import *
 from secrets import *
+from static import *
 
 UNTAPPD_BASE = "https://api.untappd.com/v4/"
 
