@@ -41,9 +41,9 @@ def register():
         db.session.add(user)
     else:
         user.deviceToken = deviceToken
-        ontherocks('/unsubscribe', {'user': user.uid})
+        ontherocks('unsubscribe', {'user': user.uid})
 
-    ontherocks('/subscribe', {'user': user.uid, 'type': 'ios', 'token': user.deviceToken})
+    ontherocks('subscribe', {'user': user.uid, 'type': 'ios', 'token': user.deviceToken})
 
     db.session.commit()
     
